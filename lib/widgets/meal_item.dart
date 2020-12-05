@@ -59,83 +59,141 @@ class MealItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => selectMeal(context),
-      child: Card(
-        elevation: 5,
-        margin: EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    height: 250,
-                    width: double.infinity,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 10,
-                  child: Container(
-                    color: Colors.black54,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 5,
-                    ),
-                    width: 300,
-                    child: Text(
-                      title,
-                      overflow: TextOverflow.fade,
-                      softWrap: true,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.schedule),
-                      SizedBox(width: 5),
-                      Text("$duration Min"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.work),
-                      SizedBox(width: 5),
-                      Text(complexityText),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.attach_money),
-                      SizedBox(width: 5),
-                      Text(affordabilityText),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      child: buildCard(),
+    );
+  }
+
+  Card buildCard() {
+    return Card(
+      elevation: 5,
+      margin: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: buildColumn(),
+    );
+  }
+
+  Column buildColumn() {
+    return Column(
+      children: [
+        buildStack(),
+        buildPadding(),
+      ],
+    );
+  }
+
+  Stack buildStack() {
+    return Stack(
+      children: [
+        buildClipRRect(),
+        buildPositioned(),
+      ],
+    );
+  }
+
+  ClipRRect buildClipRRect() {
+    return ClipRRect(
+      borderRadius: buildBorderRadius(),
+      child: buildImage(),
+    );
+  }
+
+  BorderRadius buildBorderRadius() {
+    return BorderRadius.only(
+      topLeft: Radius.circular(15),
+      topRight: Radius.circular(15),
+    );
+  }
+
+  Image buildImage() {
+    return Image.network(
+      imageUrl,
+      fit: BoxFit.cover,
+      height: 250,
+      width: double.infinity,
+    );
+  }
+
+  Positioned buildPositioned() {
+    return Positioned(
+      bottom: 20,
+      right: 10,
+      child: buildPositionedContainer(),
+    );
+  }
+
+  Container buildPositionedContainer() {
+    return Container(
+      color: Colors.black54,
+      padding: buildEdgeInsets(),
+      width: 300,
+      child: buildContainerText(),
+    );
+  }
+
+  EdgeInsets buildEdgeInsets() {
+    return EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 5,
+    );
+  }
+
+  Text buildContainerText() {
+    return Text(
+      title,
+      overflow: TextOverflow.fade,
+      softWrap: true,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 26,
       ),
+    );
+  }
+
+  Padding buildPadding() {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: buildRow(),
+    );
+  }
+
+  Row buildRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        buildScheduleRow(),
+        buildWorkRow(),
+        buildMoneyRow(),
+      ],
+    );
+  }
+
+  Row buildScheduleRow() {
+    return Row(
+      children: [
+        Icon(Icons.schedule),
+        SizedBox(width: 5),
+        Text("$duration Min"),
+      ],
+    );
+  }
+
+  Row buildWorkRow() {
+    return Row(
+      children: [
+        Icon(Icons.work),
+        SizedBox(width: 5),
+        Text(complexityText),
+      ],
+    );
+  }
+
+  Row buildMoneyRow() {
+    return Row(
+      children: [
+        Icon(Icons.attach_money),
+        SizedBox(width: 5),
+        Text(affordabilityText),
+      ],
     );
   }
 }
